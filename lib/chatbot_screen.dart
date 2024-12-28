@@ -28,7 +28,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   final List<Map<String, String>> _messages = []; 
 
   Future<String> fetchChatbotResponse(String query) async {
-    final url = Uri.parse('https://c3cd-34-125-210-9.ngrok-free.app/chat'); 
+    final url = Uri.parse('https://b9aa-34-125-185-183.ngrok-free.app//chat'); 
 
     try {
       final response = await http.post(

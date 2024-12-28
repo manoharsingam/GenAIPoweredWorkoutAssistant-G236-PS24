@@ -1,5 +1,6 @@
-// Assuming InputScreendiet is imported correctly.
+// userdetails.dartx
 import 'package:flutter/material.dart'; // Importing the screen where the diet plan will be used
+import 'package:flutter/services.dart';
 
 class UserDetailsPage extends StatefulWidget {
   @override
@@ -13,16 +14,15 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
   int age = 18;
   double weight = 60.0;
   double height = 165.0;
-  String selectedPlan = 'Fat loss';
-  String healthRecords = '';
-  double? bmi; 
+  String selectedPlan = 'Fat Loss';
+  double? bmi;
   String recommendation = '';
 
   void _calculateBmi() {
     if (height > 0 && weight > 0) {
-      double heightInMeters = height / 100; 
+      double heightInMeters = height / 100;
       setState(() {
-        bmi = weight / (heightInMeters * heightInMeters); 
+        bmi = weight / (heightInMeters * heightInMeters);
         _generateRecommendation();
       });
     }
@@ -89,6 +89,9 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                   context,
                   child: TextFormField(
                     keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
                     decoration: const InputDecoration(
                       icon: Icon(Icons.calendar_today),
                       labelText: 'Age',
@@ -107,11 +110,15 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                     },
                   ),
                 ),
+
                 // Weight Input
                 _buildInputCard(
                   context,
                   child: TextFormField(
                     keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly, // Allows only digits
+                    ],
                     decoration: const InputDecoration(
                       icon: Icon(Icons.line_weight),
                       labelText: 'Weight (kg)',
@@ -126,16 +133,20 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                     onChanged: (value) {
                       if (value.isNotEmpty) {
                         weight = double.parse(value);
-                        _calculateBmi(); // Recalculate BMI on weight change
+                        _calculateBmi();
                       }
                     },
                   ),
                 ),
+
                 // Height Input
                 _buildInputCard(
                   context,
                   child: TextFormField(
                     keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly, // Allows only digits
+                    ],
                     decoration: const InputDecoration(
                       icon: Icon(Icons.height),
                       labelText: 'Height (cm)',
@@ -150,11 +161,12 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                     onChanged: (value) {
                       if (value.isNotEmpty) {
                         height = double.parse(value);
-                        _calculateBmi(); // Recalculate BMI on height change
+                        _calculateBmi();
                       }
                     },
                   ),
                 ),
+
                 // BMI Display
                 _buildInputCard(
                   context,
@@ -188,12 +200,13 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                     ],
                   ),
                 ),
+
                 // Plan Selection
                 _buildInputCard(
                   context,
                   child: DropdownButtonFormField<String>(
                     value: selectedPlan,
-                    items: ['Fat loss', 'Muscle gain', 'Body recomposition']
+                    items: ['Fat Loss', 'Build Muscle', 'Body Recomposition']
                         .map((plan) => DropdownMenuItem(
                               value: plan,
                               child: Text(plan),
@@ -207,20 +220,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                // Health Records Input
-                _buildInputCard(
-                  context,
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.medical_services),
-                      labelText: 'Previous Health Records (if any)',
-                      border: InputBorder.none,
-                    ),
-                    maxLines: 3,
-                    onChanged: (value) => healthRecords = value,
-                  ),
-                ),
+
                 const SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
@@ -232,12 +232,11 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // Pass the selected plan and other details to the next page
                         Navigator.pushNamed(
-                context,
-                '/home',  // This is the route name for HomeScreen
-                arguments: selectedPlan,  // Pass the selected plan as an argument
-              );
+                          context,
+                          '/home', // Navigate to InputScreen
+                          arguments: selectedPlan,
+                        );
                       }
                     },
                     child: const Text(

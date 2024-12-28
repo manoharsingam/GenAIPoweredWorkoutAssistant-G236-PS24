@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class InputScreen extends StatefulWidget {
+class CVModelScreen extends StatefulWidget {
   @override
-  _InputScreenState createState() => _InputScreenState();
+  _CVModelScreenState createState() => _CVModelScreenState();
 }
 
-class _InputScreenState extends State<InputScreen> {
+class _CVModelScreenState extends State<CVModelScreen> {
   @override
   void initState() {
     super.initState();
@@ -15,7 +15,7 @@ class _InputScreenState extends State<InputScreen> {
 
   // Method to redirect the user as soon as the page loads
   Future<void> _redirectToLink() async {
-    final url = 'https://your-api-url.com/workout'; // Replace with your desired link
+    final url = 'https://your-api-url.com/cvmodel'; // Replace with your desired link
 
     try {
       final response = await http.get(Uri.parse(url));
