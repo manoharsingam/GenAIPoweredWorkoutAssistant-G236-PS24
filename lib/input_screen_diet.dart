@@ -23,7 +23,7 @@ class _InputScreendietState extends State<InputScreendiet> {
   }
 
   Future<Map<String, dynamic>> fetchDietPlan(String goal, int days) async {
-    final url = Uri.parse('https://c3cd-34-125-210-9.ngrok-free.app/diet');
+    final url = Uri.parse('https://b9aa-34-125-185-183.ngrok-free.app//diet');
 
     try {
       final response = await http.post(
